@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import { Button } from "./ui/button"
 import CustomTooltip from "./utils/CustomTooltip"
 import AddJobDialog from "./AddJobDialog";
+import AppliedJobs from "./AppliedJobs";
 
 const HomePage = () => {
 
@@ -13,19 +14,13 @@ const HomePage = () => {
 
     return (
         <div>
-            <div className="flex justify-between">
-                <h1 className="text-2xl">{`Hello ${userDetails?.name ?? 'user'}`}</h1>
+            <div className="flex justify-between mb-2">
+                <h1 className="font-bold text-3xl sm:text-4xl">{`Welcome ${userDetails?.name ?? 'user'}`}</h1>
                 <CustomTooltip tooltipText="Add new job">
-                    {/* <Button size="sm">
-                        <PiPlus/>
-                        <span className="">Add new job</span>
-                    </Button> */}
                     <AddJobDialog></AddJobDialog>
                 </CustomTooltip>
             </div>
-            {jobs?.map((job) => (
-                <>{job.company_name}</>
-            ))}
+            <AppliedJobs/>
         </div>
     )
 }

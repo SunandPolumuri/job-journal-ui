@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { useAddJobMutation } from "@/services/jobsApi"
+import { PiPlusCircle } from "react-icons/pi"
 
 const getDetails = () => {
     return (
@@ -72,7 +73,10 @@ const AddJobDialog = () => {
     return (
         <Dialog className="" open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
-                <Button size="sm">Add</Button>
+                <Button size="sm">
+                    <PiPlusCircle/>
+                    <span className="hidden sm:inline">Add new job</span>
+                </Button>
             </DialogTrigger>
             <DialogContent className="min-w-9/12 md:max-w-6/12 md:min-w-5/12">
                 <DialogHeader>

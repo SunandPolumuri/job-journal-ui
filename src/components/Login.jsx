@@ -74,6 +74,7 @@ const Login = () => {
                 const createUserRes = await createUser(userDetails).unwrap()
                 console.log('Create user ', createUserRes)
                 resetUserDetails()
+                navigate("/login")
             } catch (error) {
                 setError(error?.data?.message)
             }
