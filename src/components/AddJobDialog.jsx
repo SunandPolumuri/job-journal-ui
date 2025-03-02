@@ -1,0 +1,146 @@
+import { useState } from "react"
+import { Button } from "./ui/button"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
+import { useAddJobMutation } from "@/services/jobsApi"
+
+const getDetails = () => {
+    return (
+        <input />
+    )
+}
+
+const getLocationDetails = () => {
+    return (
+        <input />
+    )
+}
+
+const getAdditionalDetails = () => {
+    return (
+        <input />
+    )
+}
+
+const steps = [
+    {
+        title: "Details",
+        component: getDetails()
+    },
+    {
+        title: "Location",
+        component: getLocationDetails()
+    },
+    {
+        title: "Additional",
+        component: getAdditionalDetails()
+    }
+]
+
+const AddJobDialog = () => {
+
+    const [currentStep, setCurrentStep] = useState(0)
+    const [open, setOpen] = useState(false)
+    const [jobDetails, setJobDetails] = useState({})
+
+    const [addJob, {}] = useAddJobMutation()
+
+    const handleOpenChange = (state) => {
+        setJobDetails({})
+        setOpen(state)
+    }
+
+    const handleInputChange = (e) => {
+        setJobDetails({
+            ...jobDetails,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleAddJob = async () => {
+        console.log("job details ", jobDetails)
+        try {
+            const res = await addJob(jobDetails).unwrap()
+            setJobDetails({})
+            setOpen(false)
+        } catch (error) {
+            console.log("Add job error ", error)
+        }
+    }
+
+    return (
+        <Dialog className="" open={open} onOpenChange={handleOpenChange}>
+            <DialogTrigger asChild>
+                <Button size="sm">Add</Button>
+            </DialogTrigger>
+            <DialogContent className="min-w-9/12 md:max-w-6/12 md:min-w-5/12">
+                <DialogHeader>
+                    <DialogTitle>Add new job</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col gap-4">
+                    <div className="grid gap-2">
+                        <Label htmlFor="company_name">Company Name</Label>
+                        <Input 
+                            id="company_name"
+                            type="company_name"
+                            name="company_name"
+                            required
+                            value={jobDetails.company_name}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="job_role">Job Role</Label>
+                        <Input 
+                            id="job_role"
+                            type="job_role"
+                            name="job_role"
+                            required
+                            value={jobDetails.job_role}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="status">Status</Label>
+                        <Input 
+                            id="status"
+                            type="status"
+                            name="status"
+                            required
+                            value={jobDetails.status}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="job_location">Company Location</Label>
+                        <Input 
+                            id="job_location"
+                            type="job_location"
+                            name="job_location"
+                            required
+                            value={jobDetails.job_location}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="job_link">Company Link</Label>
+                        <Input 
+                            id="job_link"
+                            type="job_link"
+                            name="job_link"
+                            required
+                            value={jobDetails.job_link}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                </div>
+                <DialogFooter>
+                    <Button onClick={handleAddJob}>Submit</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+}
+
+export default AddJobDialog
