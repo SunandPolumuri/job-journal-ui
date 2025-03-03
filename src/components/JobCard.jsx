@@ -3,8 +3,17 @@ import { PiMapPin } from "react-icons/pi"
 import REACT_ICON from "../assets/react.svg"
 
 const JobCard = ({ job = {} }) => {
+
+    const getJobStatus = (status) => {
+        if(status?.toLowerCase() === 'applied') return 'applied'
+        if(status === 'Interview Scheduled') return 'interview'
+        if(status?.toLowerCase() === 'withdrawn') return 'withdrawn'
+        if(status === 'Rejected') return 'rejected'
+        if(status === 'Offer Recieved') return 'offer-recieved'
+    }
+
     return (
-        <Card>
+        <Card className={`bg-${getJobStatus(job?.status)}-gradient`}>
             <CardContent>
                 <div className="flex items-center justify-between gap-x-2">
                     <div className="flex items-center gap-x-3 min-w-0">

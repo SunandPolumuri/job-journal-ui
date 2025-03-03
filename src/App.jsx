@@ -9,11 +9,11 @@ function App() {
 
   return (
     <Router>
-      <div className='w-screen h-screen'>
+      <div className='w-screen'>
         <nav className="sticky top-0 left-0 w-full h-[7vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-2xs">
           <NavBar className="h-24"/>
         </nav>
-        <main className="h-[93vh] p-4">
+        <main className="p-4 min-h-[93vh]">
             <Routes>
               {/* Public Routes */}
               <Route path="/login" element={<Login/>}/>

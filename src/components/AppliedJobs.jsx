@@ -8,7 +8,7 @@ const AppliedJobs = () => {
     return (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
             {jobs?.map((job) => (
-                <JobCard job={job}/>
+                <JobCard key={job?.job_id} job={job}/>
             ))}
         </div>
 
