@@ -82,7 +82,7 @@ const Login = () => {
     }
 
     return (
-        <div className="flex justify-center items-center w-full h-full">
+        <div className="flex justify-center items-center w-full h-[calc(93vh-32px)]">
             <div className="w-full max-w-sm">
                 <div className="flex flex-col gap-6">
                     <Card>

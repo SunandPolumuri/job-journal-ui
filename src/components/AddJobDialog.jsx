@@ -5,6 +5,8 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { useAddJobMutation } from "@/services/jobsApi"
 import { PiPlusCircle } from "react-icons/pi"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { status_timeline } from "../utils/constants"
 
 const getDetails = () => {
     return (
@@ -59,6 +61,13 @@ const AddJobDialog = () => {
         })
     }
 
+    const handleStatusChange = (selectedStatus) => {
+        setJobDetails({
+            ...jobDetails,
+            status: selectedStatus
+        })
+    }
+
     const handleAddJob = async () => {
         console.log("job details ", jobDetails)
         try {
@@ -107,14 +116,26 @@ const AddJobDialog = () => {
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="status">Status</Label>
-                        <Input 
+                        {/* <Input 
                             id="status"
                             type="status"
                             name="status"
                             required
                             value={jobDetails.status}
                             onChange={handleInputChange}
-                        />
+                        /> */}
+                        <Select onValueChange={handleStatusChange}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {status_timeline?.map((status) => (
+                                        <SelectItem key={status.value} value={status.value}>{status.title}</SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="job_location">Company Location</Label>
