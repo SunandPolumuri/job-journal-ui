@@ -19,8 +19,25 @@ export const jobsApi = baseApi.injectEndpoints({
                 body: payload
             }),
             invalidatesTags: ["getAllJobs"]
+        }),
+        getJobById: builder.query({
+            query: (jobId) => `/jobs/getJobById/${jobId}`,
+            transformResponse: (response) => {
+                return response?.job
+            },
+            providesTags: ["getJobById"]
+        }),
+        updateJob: builder.mutation({
+            query: ({jobId, payload}) => {
+                console.log("payload ", payload)
+                return {
+                url: `/jobs/updateJob/${jobId}`,
+                method: "PUT",
+                body: payload
+            }},
+            invalidatesTags: ["getJobById"]
         })
     })
 })
 
-export const { useGetAllJobsQuery, useAddJobMutation } = jobsApi
+export const { useGetAllJobsQuery, useAddJobMutation, useGetJobByIdQuery, useUpdateJobMutation } = jobsApi

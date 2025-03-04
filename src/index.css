@@ -52,15 +52,22 @@
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.869 0.022 252.894);
   --applied: oklch(62.57% 0.2051 254.88 / 78.82%);
-  --interview: oklch(0.94 0.22 105.88 / 0.89);
+  --under-screening: oklch(32.57% 0.2051 254.88 / 78.82%);
+  --shortlisted: oklch(82.57% 0.2051 254.88 / 78.82%);
+  --interview-scheduled: oklch(0.94 0.22 105.88 / 0.89);
+  --salary-negotiation: oklch(0.94 0.22 175.88 / 0.89);
   --withdrawn: oklch(0.71 0.24 40.93 / 0.86);
   --rejected: oklch(0.66 0.28 27.03);
   --offer-recieved: oklch(0.86 0.35 145.08 / 0.79);
   --applied-gradient: radial-gradient(circle at top right, var(--applied), transparent 50%);
-  --interview-gradient: radial-gradient(circle at top right, var(--interview), transparent 50%);
+  --under-screening-gradient: radial-gradient(circle at top right, var(--under-screening), transparent 50%);
+  --shortlisted-gradient: radial-gradient(circle at top right, var(--shortlisted), transparent 50%);
+  --interview-scheduled-gradient: radial-gradient(circle at top right, var(--interview-scheduled), transparent 50%);
+  --salary-negotiation-gradient: radial-gradient(circle at top right, var(--salary-negotiation), transparent 50%);
   --withdrawn-gradient: radial-gradient(circle at top right, var(--withdrawn), transparent 50%);
   --rejected-gradient: radial-gradient(circle at top right, var(--rejected), transparent 50%);
   --offer-recieved-gradient: radial-gradient(circle at top right, var(--offer-recieved), transparent 50%);
+  --default-gradient: radial-gradient(circle at top right, oklch(23.57% 0.2051 254.88 / 78.82%), transparent 50%);
 }
 
 /* @theme {
@@ -156,15 +163,22 @@ button:focus-visible {
   --sidebar-border: oklch(0.279 0.041 260.031);
   --sidebar-ring: oklch(0.446 0.043 257.281);
   --applied: oklch(62.57% 0.2051 254.88 / 78.82%);
-  --interview: oklch(0.94 0.22 105.88 / 0.89);
+  --under-screening: oklch(32.57% 0.2051 254.88 / 78.82%);
+  --shortlisted: oklch(82.57% 0.2051 254.88 / 78.82%);
+  --interview-scheduled: oklch(0.94 0.22 105.88 / 0.89);
+  --salary-negotiation: oklch(0.94 0.22 175.88 / 0.89);
   --withdrawn: oklch(0.71 0.24 40.93 / 0.86);
   --rejected: oklch(0.66 0.28 27.03);
   --offer-recieved: oklch(0.86 0.35 145.08 / 0.79);
   --applied-gradient: radial-gradient(circle at top right, var(--applied), transparent 50%);
-  --interview-gradient: radial-gradient(circle at top right, var(--interview), transparent 50%);
+  --under-screening-gradient: radial-gradient(circle at top right, var(--under-screening), transparent 50%);
+  --shortlisted-gradient: radial-gradient(circle at top right, var(--shortlisted), transparent 50%);
+  --interview-scheduled-gradient: radial-gradient(circle at top right, var(--interview-scheduled), transparent 50%);
+  --salary-negotiation-gradient: radial-gradient(circle at top right, var(--salary-negotiation), transparent 50%);
   --withdrawn-gradient: radial-gradient(circle at top right, var(--withdrawn), transparent 50%);
   --rejected-gradient: radial-gradient(circle at top right, var(--rejected), transparent 50%);
   --offer-recieved-gradient: radial-gradient(circle at top right, var(--offer-recieved), transparent 50%);
+  --default-gradient: radial-gradient(circle at top right, oklch(23.57% 0.2051 254.88 / 78.82%), transparent 50%);
 }
 
 [data-theme="cool"] {
@@ -240,16 +254,21 @@ button:focus-visible {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-applied: var(--applied);
-  --color-interview: var(--interview);
+  --color-under-screening: var(--under-screening);
+  --color-shortlisted: var(--shortlisted);
+  --color-interview-scheduled: var(--interview-scheduled);
+  --color-salary-negotiation: var(--salary-negotiation);
   --color-withdrawn: var(--withdrawn);
   --color-rejected: var(--rejected);
   --offer-recieved: var(--offer-recieved);
   --background-image-applied-gradient: var(--applied-gradient);
-  --background-image-interview-gradient: var(--interview-gradient);
+  --background-image-under-screening: var(--under-screening);
+  --background-image-shortlisted-gradient: var(--shortlisted-gradient);
+  --background-image-interview-scheduled-gradient: var(--interview-scheduled-gradient);
+  --background-image-salary-negotiation: var(--salary-negotiation);
   --background-image-withdrawn-gradient: var(--withdrawn-gradient);
   --background-image-rejected-gradient: var(--rejected-gradient);
   --background-image-offer-recieved-gradient: var(--offer-recieved-gradient);
-
 }
 
 @layer base {

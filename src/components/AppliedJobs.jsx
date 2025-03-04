@@ -3,7 +3,7 @@ import JobCard from "./JobCard"
 
 const AppliedJobs = () => {
 
-    const { data: jobs } = useGetAllJobsQuery()
+    const { data: jobs } = useGetAllJobsQuery(undefined, {refetchOnMountOrArgChange: true})
 
     return (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">

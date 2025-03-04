@@ -5,7 +5,7 @@ export const status_timeline = [
     },
     {
         title: "Under Screening",
-        value: "underScreening"
+        value: "under-screening"
     },
     {
         title: "Shortlisted",
@@ -13,15 +13,15 @@ export const status_timeline = [
     },
     {
         title: "Interview Scheduled",
-        value: "interviewScheduled"
+        value: "interview-scheduled"
     },
     {
         title: "Salary Negotiation",
-        value: "salaryNegotiation"
+        value: "salary-negotiation"
     },
     {
         title: "Offer Recieved",
-        value: "offerRecieved"
+        value: "offer-recieved"
     }, 
     {
         title: "Withdrawn",
