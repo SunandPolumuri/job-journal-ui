@@ -13,11 +13,11 @@ const HomePage = () => {
     const {userDetails} = useSelector((state) => state.user)
 
     return (
-        <div>
+        <div className="p-4">
             <div className="flex justify-between mb-2">
                 <h1 className="font-bold text-3xl sm:text-4xl">{`Welcome ${userDetails?.name ?? 'user'}`}</h1>
                 <CustomTooltip tooltipText="Add new job">
-                    <AddJobDialog></AddJobDialog>
+                    <AddJobDialog />
                 </CustomTooltip>
             </div>
             <AppliedJobs/>

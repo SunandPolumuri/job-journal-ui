@@ -3,54 +3,34 @@ import { Button } from "./ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
-import { useAddJobMutation } from "@/services/jobsApi"
-import { PiPlusCircle } from "react-icons/pi"
+import { PiNotePencil } from "react-icons/pi";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { status_timeline } from "../utils/constants"
+import { useUpdateJobMutation } from "@/services/jobsApi"
 
-const getDetails = () => {
-    return (
-        <input />
-    )
-}
+const EditJobDialog = ({ jobId, job }) => {
 
-const getLocationDetails = () => {
-    return (
-        <input />
-    )
-}
-
-const getAdditionalDetails = () => {
-    return (
-        <input />
-    )
-}
-
-const steps = [
-    {
-        title: "Details",
-        component: getDetails()
-    },
-    {
-        title: "Location",
-        component: getLocationDetails()
-    },
-    {
-        title: "Additional",
-        component: getAdditionalDetails()
-    }
-]
-
-const AddJobDialog = () => {
-
-    const [currentStep, setCurrentStep] = useState(0)
     const [open, setOpen] = useState(false)
-    const [jobDetails, setJobDetails] = useState({})
+    const [jobDetails, setJobDetails] = useState({
+        company_name: job?.company_name,
+        job_role: job?.job_role,
+        status: job?.status,
+        job_location: job?.job_location,
+        job_platform: job?.job_platform,
+        job_link: job?.job_link,
+    })
 
-    const [addJob, {}] = useAddJobMutation()
+    const [updateJob] = useUpdateJobMutation()
 
     const handleOpenChange = (state) => {
-        setJobDetails({})
+        setJobDetails({
+            company_name: job?.company_name,
+            job_role: job?.job_role,
+            status: job?.status,
+            job_location: job?.job_location,
+            job_platform: job?.job_platform,
+            job_link: job?.job_link,
+        })
         setOpen(state)
     }
 
@@ -68,14 +48,14 @@ const AddJobDialog = () => {
         })
     }
 
-    const handleAddJob = async () => {
+    const handleUpdateJob = async () => {
         console.log("job details ", jobDetails)
+        if(!jobId) return
         try {
-            const res = await addJob(jobDetails).unwrap()
-            setJobDetails({})
+            const res = await updateJob({jobId: jobId, payload: jobDetails}).unwrap()
             setOpen(false)
         } catch (error) {
-            console.log("Add job error ", error)
+            console.log("Error updating job ", error)
         }
     }
 
@@ -83,8 +63,8 @@ const AddJobDialog = () => {
         <Dialog className="" open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
                 <Button size="sm">
-                    <PiPlusCircle/>
-                    <span className="hidden sm:inline">Add new job</span>
+                    <PiNotePencil/>
+                    <span className="hidden sm:inline">Edit job</span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="min-w-9/12 md:max-w-6/12 md:min-w-5/12">
@@ -97,7 +77,6 @@ const AddJobDialog = () => {
                         <Input 
                             id="company_name"
                             name="company_name"
-                            required
                             value={jobDetails.company_name}
                             onChange={handleInputChange}
                         />
@@ -107,22 +86,13 @@ const AddJobDialog = () => {
                         <Input 
                             id="job_role"
                             name="job_role"
-                            required
                             value={jobDetails.job_role}
                             onChange={handleInputChange}
                         />
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="status">Status</Label>
-                        {/* <Input 
-                            id="status"
-                            type="status"
-                            name="status"
-                            required
-                            value={jobDetails.status}
-                            onChange={handleInputChange}
-                        /> */}
-                        <Select onValueChange={handleStatusChange}>
+                        <Select onValueChange={handleStatusChange} value={jobDetails.status}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select application status" />
                             </SelectTrigger>
@@ -140,7 +110,6 @@ const AddJobDialog = () => {
                         <Input 
                             id="job_location"
                             name="job_location"
-                            required
                             value={jobDetails.job_location}
                             onChange={handleInputChange}
                         />
@@ -165,11 +134,11 @@ const AddJobDialog = () => {
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button onClick={handleAddJob}>Submit</Button>
+                    <Button onClick={handleUpdateJob}>Submit</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
     )
 }
 
-export default AddJobDialog
+export default EditJobDialog

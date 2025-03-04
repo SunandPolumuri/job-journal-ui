@@ -1,19 +1,19 @@
 import { Card, CardContent, CardHeader } from "./ui/card"
 import { PiMapPin } from "react-icons/pi"
 import REACT_ICON from "../assets/react.svg"
+import { useNavigate } from "react-router-dom"
+import { getStatus } from "@/utils/utils"
 
 const JobCard = ({ job = {} }) => {
 
-    const getJobStatus = (status) => {
-        if(status?.toLowerCase() === 'applied') return 'applied'
-        if(status === 'Interview Scheduled') return 'interview'
-        if(status?.toLowerCase() === 'withdrawn') return 'withdrawn'
-        if(status === 'Rejected') return 'rejected'
-        if(status === 'Offer Recieved') return 'offer-recieved'
-    }
+    const navigate = useNavigate()
 
+    const handleJobCardClick = () => {
+        navigate(`/job/${job.job_id}`)
+    }
+ 
     return (
-        <Card className={`bg-${getJobStatus(job?.status)}-gradient`}>
+        <Card onClick={handleJobCardClick} className="py-4 cursor-pointer" style={{backgroundImage: `var(--${job?.status ?? "default"}-gradient)`}}>
             <CardContent>
                 <div className="flex items-center justify-between gap-x-2">
                     <div className="flex items-center gap-x-3 min-w-0">
@@ -28,7 +28,7 @@ const JobCard = ({ job = {} }) => {
                         </div>
                     </div>
                     <div className="text-right">
-                        <span className="font-semibold text-base">{job?.status}</span>
+                        <span className="font-semibold text-base">{getStatus(job.status)}</span>
                     </div>
                 </div>
             </CardContent>
