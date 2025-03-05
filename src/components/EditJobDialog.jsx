@@ -90,7 +90,7 @@ const EditJobDialog = ({ jobId, job }) => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div className="grid gap-2">
+                    {/* <div className="grid gap-2">
                         <Label htmlFor="status">Status</Label>
                         <Select onValueChange={handleStatusChange} value={jobDetails.status}>
                             <SelectTrigger className="w-full">
@@ -104,7 +104,7 @@ const EditJobDialog = ({ jobId, job }) => {
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
-                    </div>
+                    </div> */}
                     <div className="grid gap-2">
                         <Label htmlFor="job_location">Company Location</Label>
                         <Input 
@@ -134,7 +134,7 @@ const EditJobDialog = ({ jobId, job }) => {
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button onClick={handleUpdateJob}>Submit</Button>
+                    <Button onClick={handleUpdateJob}>Update</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

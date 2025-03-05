@@ -5,6 +5,8 @@ import { Button } from "./ui/button"
 import CustomTooltip from "./utils/CustomTooltip"
 import AddJobDialog from "./AddJobDialog";
 import AppliedJobs from "./AppliedJobs";
+import UpcomingInterviews from "./UpcomingInterviews";
+import JobStats from "./JobStats";
 
 const HomePage = () => {
 
@@ -20,7 +22,15 @@ const HomePage = () => {
                     <AddJobDialog />
                 </CustomTooltip>
             </div>
-            <AppliedJobs/>
+            <div className="flex flex-wrap sm:flex-nowrap">
+                <div className="w-full sm:w-[400px]">
+                    <UpcomingInterviews/>
+                    <JobStats/>
+                </div>
+                <div className="grow">
+                    <AppliedJobs/>
+                </div>
+            </div>
         </div>
     )
 }

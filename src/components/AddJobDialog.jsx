@@ -7,6 +7,7 @@ import { useAddJobMutation } from "@/services/jobsApi"
 import { PiPlusCircle } from "react-icons/pi"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { status_timeline } from "../utils/constants"
+import { Textarea } from "./ui/textarea"
 
 const getDetails = () => {
     return (
@@ -65,6 +66,16 @@ const AddJobDialog = () => {
         setJobDetails({
             ...jobDetails,
             status: selectedStatus
+        })
+    }
+
+    const handleJobDescriptionChange = (e) => {
+        setJobDetails({
+            ...jobDetails,
+            job_details: {
+                ...(jobDetails.job_details ?? {}),
+                job_description : e.target.value
+            }
         })
     }
 
@@ -134,6 +145,18 @@ const AddJobDialog = () => {
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="job_description">Job Description</Label>
+                        <Textarea 
+                            id="job_description"
+                            name="job_description"
+                            required
+                            value={jobDetails?.job_details?.job_description}
+                            onChange={handleJobDescriptionChange}
+                            rows="5"
+                            className="max-h-[100px]"
+                        />
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="job_location">Company Location</Label>
