@@ -55,21 +55,23 @@ const EditJobDialog = ({ jobId, job }) => {
             const res = await updateJob({jobId: jobId, payload: jobDetails}).unwrap()
             setOpen(false)
         } catch (error) {
-            console.log("Error updating job ", error)
+            console.log("Error updating job ", error?.data?.message)
         }
     }
 
     return (
         <Dialog className="" open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
-                <Button size="sm">
-                    <PiNotePencil/>
-                    <span className="hidden sm:inline">Edit job</span>
-                </Button>
+                {/* <Button size="sm"> */}
+                    <div className="flex items-center gap-x-0.5 cursor-pointer hover:text-primary">
+                        <PiNotePencil/>
+                        <span>Edit <span className="hidden sm:inline">details</span></span>
+                    </div>
+                {/* </Button> */}
             </DialogTrigger>
             <DialogContent className="min-w-9/12 md:max-w-6/12 md:min-w-5/12">
                 <DialogHeader>
-                    <DialogTitle className="text-2xl">Add new job</DialogTitle>
+                    <DialogTitle className="text-2xl">Edit job details</DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col gap-4">
                     <div className="grid gap-2">

@@ -260,7 +260,7 @@ button:focus-visible {
   --color-salary-negotiation: var(--salary-negotiation);
   --color-withdrawn: var(--withdrawn);
   --color-rejected: var(--rejected);
-  --offer-recieved: var(--offer-recieved);
+  --color-offer-recieved: var(--offer-recieved);
   --background-image-applied-gradient: var(--applied-gradient);
   --background-image-under-screening: var(--under-screening);
   --background-image-shortlisted-gradient: var(--shortlisted-gradient);

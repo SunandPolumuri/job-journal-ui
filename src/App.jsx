@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <div className='w-screen'>
-        <nav className="sticky top-0 left-0 w-full h-[7vh] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-2xs">
+        <nav className="sticky top-0 left-0 w-full h-[7vh] z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-2xs">
           <NavBar className="h-24"/>
         </nav>
         <main className="min-h-[93vh]">

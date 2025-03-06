@@ -11,3 +11,10 @@ export const getStatus = (statusValue) => {
     if(!statusValue) return ""
     return status_timeline.find((ele) => ele.value === statusValue)?.title
 }
+
+export const isFinalStatusUpdate = (status) => {
+    if(status === 'offer-recieved' || status === 'withdrawn' || status === 'rejected') {
+        return true
+    }
+    return false
+}

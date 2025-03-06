@@ -60,7 +60,7 @@ const NavBar = () => {
 
     return (
         <div className="flex justify-between items-center p-3.5">
-            <h2 className="text-2xl font-bold" onClick={() => navigate("/")}>JobJournal</h2>
+            <h2 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>JobJournal</h2>
             <div>
                 <Button size="sm" variant="ghost" onClick={handleThemeChange}>
                     {currentTheme === "dark" ? <PiSun/> : <PiMoon />}
