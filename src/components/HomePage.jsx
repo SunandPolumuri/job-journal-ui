@@ -16,14 +16,17 @@ const HomePage = () => {
 
     return (
         <div className="p-4">
-            <div className="flex justify-between mb-2">
-                <h1 className="font-bold text-3xl sm:text-4xl">{`Welcome ${userDetails?.name ?? 'user'}`}</h1>
+            <div className="flex justify-between items-center mb-4">
+                <div>
+                <h1 className="font-bold text-3xl sm:text-4xl">{`Hello, ${userDetails?.name ?? 'user'}`}</h1>
+                <span className="text-sm text-muted-foreground">{(new Date).toLocaleString()}</span>
+                </div>
                 <CustomTooltip tooltipText="Add new job">
                     <AddJobDialog />
                 </CustomTooltip>
             </div>
-            <div className="flex flex-wrap sm:flex-nowrap">
-                <div className="w-full sm:w-[400px]">
+            <div className="flex flex-wrap gap-x-4 gap-y-4 sm:flex-nowrap">
+                <div className="w-full sm:w-[400px] flex flex-col gap-y-4">
                     <UpcomingInterviews/>
                     <JobStats/>
                 </div>
