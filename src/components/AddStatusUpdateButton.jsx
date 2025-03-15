@@ -8,6 +8,8 @@ import { status_timeline } from "@/utils/constants"
 import { Input } from "./ui/input"
 import { useAddStatusMutation } from "@/services/jobsApi"
 import { isFinalStatusUpdate } from "@/utils/utils"
+import { DateTimePicker } from "./DateTimePicker"
+import { Textarea } from "./ui/textarea"
 
 const AddStatusUpdateButton = ({ currentStatus, jobId }) => {
 
@@ -16,6 +18,7 @@ const AddStatusUpdateButton = ({ currentStatus, jobId }) => {
         status: '',
         additional_info: {}
     })
+    const [errMsg, setErrMsg] = useState("")
 
     const [addStatus] = useAddStatusMutation()
 
@@ -28,17 +31,27 @@ const AddStatusUpdateButton = ({ currentStatus, jobId }) => {
 
     const handleStatusChange = (selectedStatus) => {
         setNewStatus({
-            ...newStatus,
-            status: selectedStatus
+            status: selectedStatus,
+            additional_info: {}
         })
     }
 
-    const handleInputChange = (e) => {
+    const handleAdditionalInfoChange = (e) => {
         setNewStatus({
             ...newStatus,
             additional_info: {
                 ...newStatus.additional_info,
-                notes: e.target.value
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+
+    const handleInterviewDateChange = (date) => {
+        setNewStatus({
+            ...newStatus,
+            additional_info: {
+                ...newStatus.additional_info,
+                interview_date: date
             }
         })
     }
@@ -46,9 +59,11 @@ const AddStatusUpdateButton = ({ currentStatus, jobId }) => {
     const handleAddStatus = async () => {
         try {
             const res = await addStatus({jobId: jobId, payload: newStatus}).unwrap()
-            setOpen(false)
+            setErrMsg("")
+            handleOpenChange(false)
         } catch (error) {
             console.log("Error adding status ", error)
+            setErrMsg(error?.data?.message)
         }
     }
 
@@ -57,6 +72,7 @@ const AddStatusUpdateButton = ({ currentStatus, jobId }) => {
             status: '',
             additional_info: {}
         })
+        setErrMsg("")
         setOpen(state)
     }
 
@@ -66,7 +82,6 @@ const AddStatusUpdateButton = ({ currentStatus, jobId }) => {
                 <div className="cursor-pointer flex items-center">
                     <Button className="size-10 rounded-full cursor-pointer">
                         <PiPlusCircle className="size-6"/>
-                        {/* <span className="hidden sm:inline">Add status update</span> */}
                     </Button>
                     <span className="ml-4 font-medium text-primary/80 hover:text-primary">Add status update</span>
                 </div>
@@ -91,18 +106,36 @@ const AddStatusUpdateButton = ({ currentStatus, jobId }) => {
                             </SelectContent>
                         </Select>
                     </div>
+                    {newStatus?.status === "interview-scheduled" && 
+                        <>
+                            <div className="grid gap-2">
+                                <Label htmlFor="interview_date">Interview Date</Label>
+                                <DateTimePicker handleDateChange={handleInterviewDateChange}/>
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="interview_link">Interview Link</Label>
+                                <Input 
+                                    id="interview_link"
+                                    name="interview_link"
+                                    value={newStatus.additional_info?.interview_link ?? ""}
+                                    onChange={handleAdditionalInfoChange}
+                                />
+                            </div>
+                        </>
+                    }
                     <div className="grid gap-2">
-                        <Label htmlFor="additional_info">Additional Information</Label>
-                        <Input 
-                            id="additional_info"
-                            name="additional_info"
-                            value={newStatus.additional_info?.notes}
-                            onChange={handleInputChange}
+                        <Label htmlFor="notes">Notes</Label>
+                        <Textarea 
+                            id="notes"
+                            name="notes"
+                            value={newStatus.additional_info?.notes ?? ""}
+                            onChange={handleAdditionalInfoChange}
                         />
                     </div>
                 </div>
+                {errMsg && <span className="text-sm text-red-500">{errMsg}</span>}
                 <DialogFooter>
-                    <Button onClick={handleAddStatus}>Add status</Button>
+                    <Button onClick={handleAddStatus} disabled={!newStatus.status}>Add status</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

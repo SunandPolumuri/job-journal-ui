@@ -4,8 +4,6 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { PiNotePencil } from "react-icons/pi";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import { status_timeline } from "../utils/constants"
 import { useUpdateJobMutation } from "@/services/jobsApi"
 
 const EditJobDialog = ({ jobId, job }) => {
@@ -14,11 +12,11 @@ const EditJobDialog = ({ jobId, job }) => {
     const [jobDetails, setJobDetails] = useState({
         company_name: job?.company_name,
         job_role: job?.job_role,
-        status: job?.status,
         job_location: job?.job_location,
         job_platform: job?.job_platform,
         job_link: job?.job_link,
     })
+    const [errMsg, setErrMsg] = useState("")
 
     const [updateJob] = useUpdateJobMutation()
 
@@ -26,7 +24,6 @@ const EditJobDialog = ({ jobId, job }) => {
         setJobDetails({
             company_name: job?.company_name,
             job_role: job?.job_role,
-            status: job?.status,
             job_location: job?.job_location,
             job_platform: job?.job_platform,
             job_link: job?.job_link,
@@ -53,9 +50,11 @@ const EditJobDialog = ({ jobId, job }) => {
         if(!jobId) return
         try {
             const res = await updateJob({jobId: jobId, payload: jobDetails}).unwrap()
+            setErrMsg("")
             setOpen(false)
         } catch (error) {
             console.log("Error updating job ", error?.data?.message)
+            setErrMsg(error?.data?.message)
         }
     }
 
@@ -92,21 +91,6 @@ const EditJobDialog = ({ jobId, job }) => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    {/* <div className="grid gap-2">
-                        <Label htmlFor="status">Status</Label>
-                        <Select onValueChange={handleStatusChange} value={jobDetails.status}>
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select application status" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {status_timeline?.map((status) => (
-                                        <SelectItem key={status.value} value={status.value}>{status.title}</SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div> */}
                     <div className="grid gap-2">
                         <Label htmlFor="job_location">Company Location</Label>
                         <Input 
@@ -135,6 +119,7 @@ const EditJobDialog = ({ jobId, job }) => {
                         />
                     </div>
                 </div>
+                {errMsg && <span className="text-sm text-red-500">{errMsg}</span>}
                 <DialogFooter>
                     <Button onClick={handleUpdateJob}>Update</Button>
                 </DialogFooter>

@@ -48,9 +48,21 @@ export const jobsApi = baseApi.injectEndpoints({
                 body: payload
             }),
             invalidatesTags: ["getStatusTimeline", "getJobById", "getAllJobs"]
+        }),
+        getUpcomingInterviews: builder.query({
+            query: () => `/jobs/getUpcomingInterviews`
+        }),
+        updateStatus: builder.mutation({
+            query: ({statusId, payload}) => ({
+                url: `/jobs/updateStatus/${statusId}`,
+                method: "PUT",
+                body: payload
+            }),
+            invalidatesTags: ["getStatusTimeline"]
         })
     })
 })
 
 export const { useGetAllJobsQuery, useAddJobMutation, useGetJobByIdQuery,
-     useUpdateJobMutation, useGetStatusTimelineQuery, useAddStatusMutation } = jobsApi
+     useUpdateJobMutation, useGetStatusTimelineQuery, useAddStatusMutation, 
+     useGetUpcomingInterviewsQuery, useUpdateStatusMutation } = jobsApi
