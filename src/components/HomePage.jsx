@@ -1,12 +1,11 @@
-import { PiPlus } from "react-icons/pi";
 import { useGetAllJobsQuery } from "@/services/jobsApi"
 import { useSelector } from "react-redux"
-import { Button } from "./ui/button"
 import CustomTooltip from "./utils/CustomTooltip"
 import AddJobDialog from "./AddJobDialog";
 import AppliedJobs from "./AppliedJobs";
 import UpcomingInterviews from "./UpcomingInterviews";
 import JobStats from "./JobStats";
+import { format } from "date-fns";
 
 const HomePage = () => {
 
@@ -19,7 +18,8 @@ const HomePage = () => {
             <div className="flex justify-between items-center mb-4">
                 <div>
                 <h1 className="font-bold text-3xl sm:text-4xl">{`Hello, ${userDetails?.name ?? 'user'}`}</h1>
-                <span className="text-sm text-muted-foreground">{(new Date).toLocaleString()}</span>
+                {/* <span className="text-sm text-muted-foreground">{format((new Date), "PPpp")}</span> */}
+                <span className="text-sm text-muted-foreground">{`Success is just ahead. You got this!`}</span>
                 </div>
                 <CustomTooltip tooltipText="Add new job">
                     <AddJobDialog />

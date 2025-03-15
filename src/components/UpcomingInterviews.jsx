@@ -1,62 +1,70 @@
-import { useGetAllJobsQuery } from "@/services/jobsApi"
+import { useGetUpcomingInterviewsQuery } from "@/services/jobsApi"
 import { Card, CardContent } from "./ui/card"
-import { PiCaretLeft } from "react-icons/pi";
-import { PiCaretRight } from "react-icons/pi";
 import { PiVideoCamera } from "react-icons/pi"
 import { PiCalendarDots } from "react-icons/pi";
-import { useState } from "react";
+import NotesDialog from "./NotesDialog";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { format } from "date-fns";
 
 const UpcomingInterviews = () => {
 
-    const [activeIndex, setActiveIndex] = useState(1)
+    const { data, isLoading } = useGetUpcomingInterviewsQuery(undefined, { refetchOnMountOrArgChange: true })
 
-    const { data } = useGetAllJobsQuery()
-
-    let dateTime = new Date()
-
-    const handlePrev = () => {
-        if(activeIndex > 0) {
-            setActiveIndex(activeIndex - 1)
-        }
+    const getDate = (date) => {
+        if(!date) return ''
+        const interviewDate = format(date, "PPpp")
+        return interviewDate
     }
 
-    const handleNext = () => {
-        if(activeIndex + 1 < data?.length) {
-            setActiveIndex(activeIndex + 1)
+    const getInterviewLink = (link) => {
+        if (!link) {
+            return null
         }
+
+        return (
+            <a className="flex gap-x-1 items-center cursor-pointer hover:underline hover:text-primary" href={link ?? "#"} target="_blank" rel="noreferrer nofollow">
+                <PiVideoCamera/>
+                <span className="ml-0.5">Join</span>
+            </a>
+        )
     }
 
     return (
-        <div>
-            <h2 className="font-bold text-2xl mb-3 opacity-90">Upcoming Interviews</h2>
-            <div className="relative flex items-center">
-                {activeIndex > 0 && 
-                    <span onClick={handlePrev} className="absolute opacity-55 text-2xl -left-2 cursor-pointer hover:scale-150 hover:font-bold hover:opacity-100 transition-all">
-                        <PiCaretLeft/>
-                    </span>
-                }
-                <Card className="w-full">
-                    <CardContent className="flex justify-between items-center gap-x-5">
-                        <div className="flex flex-col min-w-0 gap-y-2">
-                            <h2 className="font-semibold text-2xl whitespace-nowrap overflow-hidden text-ellipsis">{data?.[activeIndex]?.company_name}</h2>
-                            <span className="text-primary/75 text-sm">{dateTime.toLocaleString()}</span>
-                            <div className="text-sm flex gap-x-1 text-muted-foreground items-center cursor-pointer hover:underline hover:text-primary">
-                                <PiVideoCamera/>
-                                <span>Join</span>
-                            </div>
-                        </div>
-                        <div className="self-start mt-1">
-                            <PiCalendarDots size={28} />
-                        </div>
-                    </CardContent>
-                </Card>
-                {activeIndex < (data?.length - 1) && 
-                    <span onClick={handleNext} className="absolute opacity-55 text-2xl -right-2 cursor-pointer hover:scale-150 hover:font-bold hover:opacity-100 transition-all">
-                        <PiCaretRight/>
-                    </span>
-                }
-            </div>
-        </div>
+        (!isLoading && data?.length > 0) ?
+            <div>
+                <h2 className="font-bold text-2xl mb-3 opacity-90">Upcoming Interviews</h2>
+                <Carousel className="w-full">
+                    <CarouselContent>
+                        {data?.map((item, index) => (
+                            <CarouselItem key={index}>
+                                <Card className="w-full">
+                                    <CardContent className="flex justify-between items-center gap-x-5">
+                                        <div className="flex flex-col min-w-0 gap-y-2">
+                                            <h2 className="font-semibold text-2xl whitespace-nowrap overflow-hidden text-ellipsis">{item?.company_name}</h2>
+                                            {item?.additional_info?.interview_date &&
+                                                <span className="text-primary/75 text-sm">{getDate(item?.additional_info?.interview_date)}</span>
+                                            }
+                                            <div className="flex gap-x-3 text-sm text-muted-foreground">
+                                                {item?.additional_info?.interview_link &&
+                                                    getInterviewLink(item?.additional_info?.interview_link)
+                                                }
+                                                <NotesDialog notes={item?.additional_info?.notes} />
+                                            </div>
+                                        </div>
+                                        <div className="self-start mt-1">
+                                            <PiCalendarDots size={28} />
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="-left-3"/>
+                    <CarouselNext className="-right-3"/>
+                </Carousel>
+            </div> 
+        : null
+        
     )
 }
 

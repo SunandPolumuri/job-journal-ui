@@ -9,50 +9,18 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { status_timeline } from "../utils/constants"
 import { Textarea } from "./ui/textarea"
 
-const getDetails = () => {
-    return (
-        <input />
-    )
-}
-
-const getLocationDetails = () => {
-    return (
-        <input />
-    )
-}
-
-const getAdditionalDetails = () => {
-    return (
-        <input />
-    )
-}
-
-const steps = [
-    {
-        title: "Details",
-        component: getDetails()
-    },
-    {
-        title: "Location",
-        component: getLocationDetails()
-    },
-    {
-        title: "Additional",
-        component: getAdditionalDetails()
-    }
-]
-
 const AddJobDialog = () => {
 
-    const [currentStep, setCurrentStep] = useState(0)
     const [open, setOpen] = useState(false)
     const [jobDetails, setJobDetails] = useState({})
+    const [errMsg, setErrMsg] = useState("")
 
     const [addJob, {}] = useAddJobMutation()
 
     const handleOpenChange = (state) => {
         setJobDetails({})
         setOpen(state)
+        setErrMsg("")
     }
 
     const handleInputChange = (e) => {
@@ -84,9 +52,11 @@ const AddJobDialog = () => {
         try {
             const res = await addJob(jobDetails).unwrap()
             setJobDetails({})
+            setErrMsg("")
             setOpen(false)
         } catch (error) {
             console.log("Add job error ", error)
+            setErrMsg(error?.data?.message)
         }
     }
 
@@ -187,6 +157,7 @@ const AddJobDialog = () => {
                         />
                     </div>
                 </div>
+                {errMsg && <span className="text-sm text-red-500">{errMsg}</span>}
                 <DialogFooter>
                     <Button onClick={handleAddJob}>Submit</Button>
                 </DialogFooter>
