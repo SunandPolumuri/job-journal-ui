@@ -35,11 +35,11 @@ Begin by cloning both the **frontend** and **backend** repositories to your loca
 
 ```bash
 # Clone the frontend repository
-git clone <frontend-repository-url>
+git clone https://github.com/SunandPolumuri/job-journal-ui.git
 cd job-journal-ui
 
 # Clone the backend repository
-git clone <backend-repository-url>
+git clone https://github.com/SunandPolumuri/job-journal-service.git
 cd job-journal-service
 ```
 
