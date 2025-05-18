@@ -2,6 +2,10 @@
 
 A comprehensive web application designed to streamline the job application process, providing users with an intuitive way to track job applications, manage application statuses, and prepare for upcoming interviews. The app visualizes the progress of job applications through an interactive timeline, ensuring users stay organized and informed throughout their job search.
 
+## Screenshots
+
+![DemoImage](https://github.com/user-attachments/assets/a69db28d-dcf8-4e0c-9de3-4c2afadc72f2)
+
 ## Key Features
 
 **Visually Engaging and Fully Responsive UI:** The application boasts a sleek, user-friendly design that adapts seamlessly to all screen sizes. Users can easily navigate through job application cards, view detailed information, and track status progress in an interactive and visually appealing layout.
